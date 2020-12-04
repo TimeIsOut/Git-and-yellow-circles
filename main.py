@@ -3,10 +3,27 @@ from random import randint
 from PyQt5 import uic, QtCore, QtGui, QtWidgets
 
 
-class YellowCircles(QtWidgets.QMainWindow):
+class Ui_Form(object):
+    def setupUi(self, Form):
+        Form.setObjectName("Form")
+        Form.resize(500, 380)
+        self.push = QtWidgets.QPushButton(Form)
+        self.push.setGeometry(QtCore.QRect(160, 330, 181, 31))
+        self.push.setObjectName("push")
+
+        self.retranslateUi(Form)
+        QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def retranslateUi(self, Form):
+        _translate = QtCore.QCoreApplication.translate
+        Form.setWindowTitle(_translate("Form", "Form"))
+        self.push.setText(_translate("Form", "Нажимай"))
+
+
+class YellowCircles(QtWidgets.QMainWindow, Ui_Form):
     def __init__(self):
         super().__init__()
-        uic.loadUi("UI.ui", self)
+        self.setupUi(self)
         self.push.clicked.connect(self.go)
         self.do_paint = False
 
@@ -22,7 +39,8 @@ class YellowCircles(QtWidgets.QMainWindow):
             qp.end()
 
     def draw_circle(self, qp):
-        qp.setBrush(QtGui.QColor(255, 255, 0))
+        r1, r2, r3 = randint(0, 255), randint(0, 255), randint(0, 255)
+        qp.setBrush(QtGui.QColor(r1, r2, r3))
         center = (250, 190)
         random = randint(1, 100)
         qp.drawEllipse(center[0] - random, center[1] - random, 2 * random, 2 * random)
